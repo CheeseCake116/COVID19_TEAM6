@@ -28,7 +28,7 @@ with open("K_COVID19.csv", 'r') as file:
         if not i:
             continue
 
-        if (line[col_list['region_code']], line[col_list['confirmed_date']]) in primary_set or line[col_list['region_code']] == "NULL":
+        if (line[col_list['region_code']], line[col_list['confirmed_date']]) in primary_set or line[col_list['region_code']] == "NULL" or line[col_list['confirmed_date']] == "NULL":
             continue
         else:
             primary_set.append((line[col_list['region_code']], line[col_list['confirmed_date']]))
