@@ -37,7 +37,7 @@ CREATE TABLE Region(
     elementary_school_count int,
     kindergarten_count int,
     university_count int,
-    academy_ratio int,
+    academy_ratio float,
     elderly_population_ratio float,
     elderly_alone_ratio float,
     nursing_home_count int,
@@ -51,5 +51,5 @@ CREATE TABLE Weather(
     avg_temp float,
     min_temp float,
     max_temp float,
-    PRIMARY KEY (region_code)
+    PRIMARY KEY (region_code, wdate)
 );
