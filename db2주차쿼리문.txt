@@ -1,0 +1,30 @@
+create table TimeInfo (
+	date date NOT NULL PRIMARY KEY,
+	test int,
+	negative int,
+	confirmed int,
+	released int,
+	deceased int
+);
+
+create table TimeAge (
+	date date PRIMARY KEY,
+	age varchar(10),
+	confirmed int,
+	deceased int
+);
+
+create table TimeGender (
+	date date PRIMARY KEY,
+	sex varchar(10),
+	confirmed int,
+	deceased int
+);
+
+create table TimeProvince (
+	date date PRIMARY KEY,
+	province varchar(10),
+	confirmed int,
+	released int,
+	deceased int
+);
