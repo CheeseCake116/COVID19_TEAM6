@@ -1,8 +1,6 @@
 import pymysql
 import csv
-import pandas as pd
 import time
-import pprint
 time.strftime('%Y-%m-%d %H:%M:%S')
 
 conn = pymysql.connect(host='localhost',
@@ -14,42 +12,67 @@ conn = pymysql.connect(host='localhost',
 
 cursor = conn.cursor()
 timeage_dic = {}
+deceased_dic = {}
+confirmed_dic = {}
+
+total_deceased = {}
+total_confirmed = {}
 try:
     with conn.cursor() as cur:
-        cur.execute('SELECT confirmed_date, age, COUNT(*) from Patientinfo where state=\'deceased\' group by age, confirmed_date order by confirmed_date')
+
+        cur.execute('SELECT DISTINCT age from Patientinfo')
         rows = cur.fetchall()
-        for row in rows:
+        for r in rows:
+            if r[0]:
+                total_deceased[r[0]] = 0
+                total_confirmed[r[0]] = 0
+
+        cur.execute('SELECT confirmed_date, age, COUNT(*) from Patientinfo where state=\'deceased\' group by age, confirmed_date order by confirmed_date')
+        deceased_rows = cur.fetchall()
+        for row in deceased_rows:
             if not row[0] or not row[1]:
                 continue
-            elif (row[0], row[1]) not in timeage_dic:
-                timeage_dic[(row[0], row[1])] = {'deceased_num': row[2], 'confirmed_num' : 0}
+            if str(row[0]) not in deceased_dic:
+                deceased_dic[str(row[0])] = []
+            deceased_dic[str(row[0])].append((row[1], row[2]))
 
         cur.execute('SELECT confirmed_date, age, count(*) from Patientinfo where state!=\'deceased\' group by age, confirmed_date order by confirmed_date')
-        rows = cur.fetchall()
-        for row in rows:
+        confirmed_rows = cur.fetchall()
+        for row in confirmed_rows:
             if not row[0] or not row[1]:
                 continue
-            elif (row[0], row[1]) not in timeage_dic:
-                timeage_dic[(row[0], row[1])] = {'deceased_num': 0, 'confirmed_num' : row[2]}
-            else:
-                timeage_dic[((row[0], row[1]))]['confirmed_num'] = row[2]
+            if str(row[0]) not in confirmed_dic:
+                confirmed_dic[str(row[0])] = []
+            confirmed_dic[str(row[0])].append((row[1], row[2]))
 
-        for key, val in timeage_dic.items():
-            query = "INSERT INTO `TimeAge`(date, age, confirmed, deceased) values (%s, %s, %s, %s)"
-            sqldata = (str(key[0]), key[1], val['confirmed_num'], val['deceased_num'])
-            try:
-                cur.execute(query, sqldata)
-                print(f"[OK] Inserting {key}to TimeAge")
-            except (pymysql.Error, pymysql.Warning) as e:
-                if e.args[0] == 1062:
+        with open("./addtional_Timeinfo.csv", 'r') as file:
+            file_read = csv.reader(file)
+
+            for i, line in enumerate(file_read):
+                if not i:
                     continue
-                print(e)
+                today = line[0]
+                timeage_dic[today] = {}
 
-        cur.execute("SELECT * from `TimeAge`")
-        rows = cur.fetchall()
-        pprint.pprint(rows)
+                if today in deceased_dic:
+                    for (age, num) in deceased_dic[today]:
+                        total_deceased[age] += num
+                if today in confirmed_dic:
+                    for (age, num) in confirmed_dic[today]:
+                        total_confirmed[age] += num
 
+                for age in list(total_deceased.keys()):
+                    timeage_dic[today][age] = (total_confirmed[age], total_deceased[age])
 
+                query = "INSERT INTO `TimeAge`(date, age, confirmed, deceased) VALUES (%s, %s, %s, %s)"
+                for key, val in tuple(timeage_dic[today].items()):
+                    try:
+                        cur.execute(query, (today, key, val[0], val[1]))
+                        print(f"[OK] {today}, {key} to TimeAge")
+                    except (pymysql.Error, pymysql.Warning) as e:
+                        print(e)
+
+            # print(timeage_dic)
 finally:
     conn.commit()
     conn.close()
