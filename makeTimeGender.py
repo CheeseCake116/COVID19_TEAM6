@@ -1,3 +1,6 @@
+"""
+작성자 : 곽승규
+"""
 # -*- coding: utf-8 -*-
 import pymysql
 import csv
@@ -43,7 +46,7 @@ for date in list(deceased_date):
 date = [] # checking을 하기위한 리스트
 total_confirmed = {}
 total_confirmed = {
-    'male':0,
+    'male': 0,
     'female' : 0
 }
 total_male_confirmed = 0 # 남자 확진자 수
@@ -65,7 +68,6 @@ with open("addtional_Timeinfo.csv", 'r') as file: # addtional_Timeinfo.csv 파�
     # 반복문 사용 시 몇 번째 반복문인지 확인이 필요할 수 있습니다. 이때 사용합니다.
     # 인덱스 번호와 컬렉션의 원소를 tuple형태로 반환합니다.
     for i, line in enumerate(file_read): # file_read 의 한줄 씩 ( 한줄은 tuple임 ex(date: 2020.1.20	test: 1	negative : 0) )
-        change = 0
         # Skip first line
         if not i:
             continue
@@ -89,19 +91,19 @@ with open("addtional_Timeinfo.csv", 'r') as file: # addtional_Timeinfo.csv 파�
             sql_data.append(sex)
             if line[col_list['date']] in cdate_dic.keys():
                 if sex in cdate_dic[line[col_list['date']]]:
-                    change = 1
                     total_confirmed[sex] = total_confirmed[sex] + cdate_dic[line[col_list['date']]][sex]
+                # else:
+                #     change = 1
+                #     total_confirmed[sex] = total_confirmed[sex] + cdate_dic[line[col_list['date']]][sex]
             sql_data.append(total_confirmed[sex])  # 여기에서 confirmed를 넣는다.
 
-            # print(sql_data)
+
             # append "total number from deceased_date" to sql_date list
             if line[col_list['date']] in ddate_dic.keys():
-                change = 1
                 total_deceased = total_deceased + ddate_dic[line[col_list['date']]]
             sql_data.append(total_deceased) # 여기에서 deceased를 넣는다.
 
-            if not change:
-                continue
+
             print(sql_data)
             # Make query & execute
             query = """INSERT INTO `timeGender`(date, sex, confirmed, deceased) VALUES (%s,%s,%s,%s)"""
