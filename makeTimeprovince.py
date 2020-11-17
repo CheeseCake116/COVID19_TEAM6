@@ -122,29 +122,20 @@ with open("addtional_Timeinfo.csv", 'r') as file:
             sql_data.append(line[col_list['date']]) # 'date' 값 삽입
             sql_data.append(province) # 'province' 값 삽입
 
-            changed = 0
-
             if line[col_list['date']] in cdate_dic.keys():
                 if province in cdate_dic[line[col_list['date']]]:
-                    changed = 1
                     total_confirmed[province] = total_confirmed[province] + cdate_dic[line[col_list['date']]][province]
             sql_data.append(total_confirmed[province])
 
             if line[col_list['date']] in rdate_dic.keys():
                 if province in rdate_dic[line[col_list['date']]]:
-                    changed = 1
                     total_released[province] = total_released[province] + rdate_dic[line[col_list['date']]][province]
             sql_data.append(total_released[province])
 
             if line[col_list['date']] in ddate_dic.keys():
                 if province in ddate_dic[line[col_list['date']]]:
-                    changed = 1
                     total_deceased[province] = total_deceased[province] + ddate_dic[line[col_list['date']]][province]
             sql_data.append(total_deceased[province])
-
-            # 해당 날짜와 지역에 변화가 없다면 스킵
-            if not changed:
-                continue
 
 
 
