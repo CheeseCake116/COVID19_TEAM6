@@ -90,7 +90,7 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
         </thead>
         <tbody>
             <?php
-            $sql = "select * from weather where province='" . $province . "' and month(wdate)=" . $month;
+            $sql = "select * from weather where province='" . $province . "' and month(wdate)=" . $month . " order by wdate";
             $result = mysqli_query($link, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 print "<tr>";
