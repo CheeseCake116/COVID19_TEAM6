@@ -40,7 +40,9 @@
     </form>
 
     <?php
-        $city = $_POST['City'];
+        $city = 0;
+        if ( !empty($_POST) )
+            $city = $_POST['City'];
         $sql="select count(*) as num from region where city = '". $city."'";
         $result = mysqli_query($link, $sql);
         $data = mysqli_fetch_assoc($result);
