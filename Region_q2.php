@@ -67,8 +67,9 @@
         </tr>
         </thead>
         <tbody>
+            
             <?php
-            print "selected city = " . $city;
+            print "<h3>". "selected city : ". $city ."</h3>" ;
             $sql = "select * from region where city = '".$city."'";
             $result = mysqli_query($link,$sql);
                     while( $row = mysqli_fetch_assoc($result)  )
