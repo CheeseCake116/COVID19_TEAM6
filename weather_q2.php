@@ -83,8 +83,8 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
                 <th>Region Code </th>
                 <th>Province</th>
                 <th>Date</th>
-                <th>Min Temp.</th>
                 <th>Average Temp.</th>
+                <th>Min Temp.</th>
                 <th>Max Temp.</th>
             </tr>
         </thead>
