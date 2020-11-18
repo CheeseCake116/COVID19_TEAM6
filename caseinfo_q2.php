@@ -26,7 +26,10 @@
     ?>
 	
 	<?php
-		$selectOption = $_POST['taskOption'];
+		$selectOption = 0;
+		if (!empty($_POST))
+			$selectOption = $_POST['taskOption'];
+		
 		$opt = array('확진자 수', '100명 이상', '50~100명', '0~50명');
 		print "
 			<form action='' method='post'>
