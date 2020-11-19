@@ -21,12 +21,12 @@
     <h2 style="text-align:center"> 곽진욱, 곽승규, 이주형 </h2>
     <hr style = "border : 5px solid yellowgreen">
     
-    <h3> City를 입력하세요 </h3>
+    <h3> Province를 입력하세요 </h3>
     <form action="" method="post">
-        <select name ="City">
+        <select name ="Province">
             <option value ="none" selected> 선택하세요 </option>
             <?php
-                $sql = "select distinct city from region";
+                $sql = "select distinct province from region";
                 $res = mysqli_query($link, $sql);
                 while ($row = mysqli_fetch_assoc($res)) {
                 
@@ -40,10 +40,10 @@
     </form>
 
     <?php
-        $city = 0;
+        $province = 0;
         if ( !empty($_POST) )
-            $city = $_POST['City'];
-        $sql="select count(*) as num from region where city = '". $city."'";
+            $province = $_POST['Province'];
+        $sql="select count(*) as num from region where province = '". $province."'";
         $result = mysqli_query($link, $sql);
         $data = mysqli_fetch_assoc($result);
     ?>
@@ -71,8 +71,8 @@
         <tbody>
             
             <?php
-            print "<h3>". "selected city : ". $city ."</h3>" ;
-            $sql = "select * from region where city = '".$city."'";
+            print "<h3>". "selected province : ". $province ."</h3>" ;
+            $sql = "select * from region where province = '".$province."'";
             $result = mysqli_query($link,$sql);
                     while( $row = mysqli_fetch_assoc($result)  )
                     {
