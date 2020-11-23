@@ -99,7 +99,7 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
         <?php
             print "<h3> Selected Province : " . $province . ", Month : " . $month . "</h3>";
         ?>
-        <h3>Weather table (Currently <?php echo $data['num']; ?>) rows in database </h3>
+        <h3>Group_infection view (Currently <?php echo $data['num']; ?>) rows in database </h3>
     </p>
 
     <table cellspacing="0" width="100%">
