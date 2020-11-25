@@ -9,3 +9,4 @@ create table Hospital
 	Capacity int,
 	Now int
 );
+alter table patientinfo add hospital_id int;
