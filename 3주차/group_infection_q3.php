@@ -76,8 +76,14 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     </form>
 
     <?php
-    $province = $_GET["province"];
-    $month = $_GET["month"];
+    $province = 0;
+	if (!empty($_GET))
+		$province = $_GET["province"];
+		
+    $month = 0;
+	if (!empty($_GET))
+		$month = $_GET["month"];
+
     $sql = "select count(*) as num from GROUP_INFECTION"; //where province='" . $province . "' and month(wdate)=" . $month;
     if ($province != "all" or $month != "all") {
         $sql = $sql . " where ";
