@@ -1,0 +1,44 @@
+﻿Hospital_id,Hospital name,Hospital_province,Hospital_city,Hospital_latitude,Hospital_longitude,capacity,now
+1,Fatima,Daegu,Buk-gu,35.883831,128.6215982,121,0
+2,MS Reconstruction Hospital,Daegu,jung-gu,35.871853,128.604853,122,0
+3,Maya Hospital,Gyeongsangbuk-do,Yeongcheon,35.910928,129.015047,123,0
+4,Semyung Christian Hospital,Pohang,Nam-gu,36.01803,129.362091,124,0
+5,Andong Sungso Hospital,Gyeongsangbuk-do,Andong,36.567134,128.722865,125,0
+6,Suseong Metro Hospital,Daegu,Suseong-gu,35.8916062,128.65063,126,0
+7,Uijeongbu St.Mary's Hospital,Gyeongki-do,Uijeongbu,37.758616,127.077718,127,0
+8,Gyeongsan Central Hospital,Gyeongsan,Baekcheon-dong,35.809188,128.44246,128,0
+9,Ajou University Hospital,Suwon,Yeongtong-gu,37.2795318,127.0477406,129,0
+10,Busan ST. MARY’S Hospital,Busan,Nam-gu,35.06387,129.06346,130,0
+11,Asan Medical Center,Seoul,Songpa-gu,37.527998,127.108145,131,0
+12,Soonchunhyang University Hospital,Gyeongsangbuk-do,Gumi,36.103011,128.382772,132,0
+13,Donguk University Hosptal,Gyeongsangbuk-do,Gyeong-ju,35.858432,129.196402,133,0
+14,Gangneung Asan Hospital,Gangwon-do,Gangneung,37.818738,128.857798,134,0
+15,The Catholic Univ. Of Korea Seoul St.Mary's Hospital,Seoul,Seocho-gu,37.501713,127.004743,135,0
+16,Chonnam National University Hospital,Gwangju,Dong-gu,35.141989,126.922021,100,0
+17,Inje University Ilsan Paik Hospital,Gyengki-do,Goyang,37.674334,126.750406,139,0
+18,Jeonbuk National University Hospital,Jeollabuk-do,Jeonju,35.8471872,127.1405894,100,0
+19,Gyeongsang National University Hospital,Gyeongsangnam-do,Jinju,35.1764353,128.0956934,136,0
+20,Ulsan University,Ulsan,Dong-gu,35.5201066,129.4278604,136,0
+21,Ungsang Jungang Hospital,Yangsan,Myeong-dong,35.406427,129.164537,137,0
+22,Busan Paik Hospital,Busan,Jin-gu,35.145986,129.020887,120,0
+23,Daejeon Eulji Medical Center,Daejeon,Seo-gu,36.355535,127.382378,102,0
+24,Cheongju Medical Center,Chung-cheong bukdo,Cheongju,36.639978,127.473007,100,0
+25,Kyungpook National University Chilgok Hospital,Daegu,Buk-gu,35.956826,128.564359,100,0
+26,Busan Adventist Hospital,Busan,Seo-gu,35.112646,129.011139,134,0
+27,Seoul National University Hospital,Seoul,Jongno-gu,37.577552,126.999844,100,0
+28,Pusan National University Hospital,Busan,Seo-gu,35.100529,129.019059,137,0
+29,Kyunghee University Hospital,Seoul,Dongdaemun-gu,37.593898,127.051313,100,0
+30,Konkuk University Medical Center,Seoul,Gwangjin-gu,37.54084,127.072223,132,0
+31,Korea University Anam Hospital,Seoul,Seongbuk-gu,37.587254,127.026497,100,0
+32,Samsun Hospital,Busan,Sasang-gu,35.150717,129.008081,111,0
+33,Haeundae Paik Hospital,Busan,Haeundae-gu,35.17423,129.181807,132,0
+34,Yeungnam University Medical Center,Gyeongsangbuk-do,GyeongSan,35.847495,128.584929,121,0
+35,Keimyung Univ. Daegu Dongsan Hospital,Daegu,Jung-gu,35.8684979,128.5807502,122,0
+36,Kyungpook National University Hospital,Daegu,Buk-gu,35.865942,128.61,139,0
+37,Severance Hospital,Seoul,Seodaemun-gu,37.562483,126.941068,100,0
+38,hanyang university hospital,Seoul,Seongdong-gu,37.559818,127.043995,124,0
+39,Jeju Hanra Hospital,Jejudo,Jejusi,33.490067,126.485124,132,0
+40,Sahmyook Medical Center,Seoul,Dongdaemun-gu,37.5878949,127.0631328,123,0
+41,Samsung Medical Center,Seoul,Gangnam-gu,37.488157,127.085575,121,0
+42,kwakh,Daegu,jung-gu,35.87075,128.58876,125,0
+43,Konyang University Hospital,Daejeon,Seogu,36.307468,127.342652,124,0
