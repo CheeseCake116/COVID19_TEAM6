@@ -30,9 +30,8 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     <h1> 데이타베이스 6조 </h1>
     <h2>곽진욱, 곽승규, 이주형</h2>
     <hr style="border : 5px solid yellowgreen">
-    <h3> Select Hospital id.</h3>
     <form method="GET" action="">
-		<input type='number' name="hospital_id"></input>
+		<b>병원 번호 : </b><input type='number' name="hospital_id" default='<?php print "0"?>'></input>
 		<input type="submit"></input>
     </form>
 
@@ -50,7 +49,9 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     ?>
     <p>
         <?php
-            print "<h3> Selected Hospital_id : " . $hospital_id . "</h3>";
+		
+			if (!empty($_GET))
+				print "<h3> Selected Hospital_id : " . $hospital_id . "</h3>";
         ?>
         <h3>Patient table (Currently <?php echo $data['num']; ?>) rows in database </h3>
     </p>
