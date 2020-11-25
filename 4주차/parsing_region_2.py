@@ -3,10 +3,10 @@ import pymysql
 import csv
 
 #mysql server 연결, port 및 host 주의!
-conn = pymysql.connect(host='localhost',
+conn = pymysql.connect(host='127.0.0.1',
                         port = 3306,
-                        user='tmdrb0912',
-                        password='0206',
+                        user='juhyoung98',
+                        password='0000',
                         db='K_COVID19',
                         charset='utf8')
 

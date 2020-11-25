@@ -17,7 +17,7 @@ cursor = conn.cursor()
 
 # 중복된 case 제거를 위해 checking list
 hospital_code = [None]
-with open("Hospital.csv", 'r') as file:
+with open("../Hospital.csv", 'r') as file:
     file_read = csv.reader(file)
 
     # Use column 1 : Hospital_id, 2:Hospital name, 3 : Hospital_province, 4 : Hospital_city, 5 : Hospital_latitude,
@@ -75,7 +75,7 @@ with open("Hospital.csv", 'r') as file:
 ###
 
 cursor.execute("SELECT patient_id, province, city FROM patientinfo")
-patient_row = list(cursor.fetchall())
+patient_row = cursor.fetchall()
 patient_col_list = {
     'patient_id' : 0,
     'province' : 1,
@@ -85,10 +85,12 @@ for row in patient_row:
     row = list(row)
     min_dist = 1000000
     min_dist_idx = 0
-    if row[patient_col_list['city']] == 'etc':
+    if row[patient_col_list['city']] == 'etc' or row[patient_col_list['city']] is None:
         row[patient_col_list['city']] = row[patient_col_list['province']]
     cursor.execute(f"SELECT latitude, longitude from Region where province='{row[patient_col_list['province']]}' and city='{row[patient_col_list['city']]}'")
     patient_loca = cursor.fetchone()
+    if not patient_loca: # Region의 province, city의 이름과 PatientInfo의 province, city의 이름이 일치하지 않아서 환자의 지역을 구할수가 없다. 그래서 걸러냈다.
+        continue
 
     for i, hospital in enumerate(hospital_code):
 
@@ -101,9 +103,12 @@ for row in patient_row:
             min_dist = tmp
             min_dist_idx = i
 
-    # cursor.execute(f"UPDATE patientInfo SET hospital_id={min_dist_idx} where patient_id={row['patient_id']}")
+    cursor.execute(f"UPDATE patientInfo SET hospital_id={min_dist_idx} where patient_id={row[patient_col_list['patient_id']]}")
     hospital_code[min_dist_idx][3] += 1
 
-
+for i, hospital in enumerate(hospital_code):
+    if not i:
+        continue
+    cursor.execute(f"UPDATE hospital SET now={hospital[3]} where Hospital_id={i}")
 conn.commit()
 cursor.close()
