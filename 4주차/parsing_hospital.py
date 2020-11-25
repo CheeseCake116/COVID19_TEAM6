@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import pymysql
 import csv
+def get_dist(pat_lat, pat_long, hos_lat, hos_long):
+    return (hos_lat-pat_lat)**2 + (hos_long-pat_long)**2
 
 #mysql server 연결, port 및 host 주의!
-conn = pymysql.connect(host='localhost',
+conn = pymysql.connect(host='127.0.0.1',
                         port = 3306,
-                        user='tmdrb0912',
-                        password='0206',
+                        user='juhyoung98',
+                        password='0000',
                         db='K_COVID19',
                         charset='utf8')
 
@@ -14,8 +16,8 @@ conn = pymysql.connect(host='localhost',
 cursor = conn.cursor()
 
 # 중복된 case 제거를 위해 checking list
-hospital_code = []
-with open("Hospital.csv", 'r') as file:
+hospital_code = [None]
+with open("../Hospital.csv", 'r') as file:
     file_read = csv.reader(file)
 
     # Use column 1 : Hospital_id, 2:Hospital name, 3 : Hospital_province, 4 : Hospital_city, 5 : Hospital_latitude,
@@ -25,7 +27,7 @@ with open("Hospital.csv", 'r') as file:
         'Hospital_id' : 0,
         'Hospital_name' : 1,
         'Hospital_province' : 2,
-        'lHospital_city' : 3,
+        'Hospital_city' : 3,
         'Hospital_latitude' : 4,
         'Hospital_longitude' : 5,
         'capacity' : 6,
@@ -41,7 +43,8 @@ with open("Hospital.csv", 'r') as file:
         if (line[col_list['Hospital_id']] in hospital_code) or (line[col_list['Hospital_id']] == "NULL") :
             continue
         else:
-            hospital_code.append(line[col_list['Hospital_id']])
+            # hospital_code.append(line[col_list['Hospital_id']])
+            hospital_code.append([float(line[col_list['Hospital_latitude']]), float(line[col_list['Hospital_longitude']]), int(line[col_list['capacity']]), int(line[col_list['now']])])
 
         #make sql data & query
         sql_data = []
@@ -69,5 +72,43 @@ with open("Hospital.csv", 'r') as file:
             print('[Error] %s | %s'%(line[col_list['Hospital_id']],e))
             break
 
+###
+
+cursor.execute("SELECT patient_id, province, city FROM patientinfo")
+patient_row = cursor.fetchall()
+patient_col_list = {
+    'patient_id' : 0,
+    'province' : 1,
+    'city' : 2
+}
+for row in patient_row:
+    row = list(row)
+    min_dist = 1000000
+    min_dist_idx = 0
+    if row[patient_col_list['city']] == 'etc' or row[patient_col_list['city']] is None:
+        row[patient_col_list['city']] = row[patient_col_list['province']]
+    cursor.execute(f"SELECT latitude, longitude from Region where province='{row[patient_col_list['province']]}' and city='{row[patient_col_list['city']]}'")
+    patient_loca = cursor.fetchone()
+    if not patient_loca: # Region의 province, city의 이름과 PatientInfo의 province, city의 이름이 일치하지 않아서 환자의 지역을 구할수가 없다. 그래서 걸러냈다.
+        continue
+
+    for i, hospital in enumerate(hospital_code):
+
+        if not i:
+            continue
+        if hospital[3] >= hospital[2]: # 수용인원 다 차면 continue
+            continue
+        tmp = get_dist(patient_loca[0], patient_loca[1], hospital[0], hospital[1])
+        if tmp <= min_dist:
+            min_dist = tmp
+            min_dist_idx = i
+
+    cursor.execute(f"UPDATE patientInfo SET hospital_id={min_dist_idx} where patient_id={row[patient_col_list['patient_id']]}")
+    hospital_code[min_dist_idx][3] += 1
+
+for i, hospital in enumerate(hospital_code):
+    if not i:
+        continue
+    cursor.execute(f"UPDATE hospital SET now={hospital[3]} where Hospital_id={i}")
 conn.commit()
 cursor.close()
