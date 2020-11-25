@@ -2,7 +2,7 @@
     <title> K_COVID19 TEAM6 </title>
 </head>
 <?php
-$link = mysqli_connect("127.0.0.1", "juhyoung98", "0000", "k_covid19");
+$link = mysqli_connect("127.0.0.1", "userid", "password", "k_covid19");
 if ($link === false) {
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
@@ -30,49 +30,29 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     <h1> 데이타베이스 6조 </h1>
     <h2>곽진욱, 곽승규, 이주형</h2>
     <hr style="border : 5px solid yellowgreen">
-    <h3> Select Sex and Age.</h3>
-    <form method="GET" action="patientinfo_q2.php">
-    <input list="sex_list" name="sex">
-    <datalist id="sex_list">
-        <option value="male"> male </option>
-        <option value="female"> female </option>
-    </datalist>
-        </input>
-    <input list="ages" name="age">
-    <datalist id="ages">
-    <?php
-            $sql = "select distinct age from patientInfo where age is not null order by age";
-            $res = mysqli_query($link, $sql);
-            while ($row = mysqli_fetch_assoc($res)) {
-                
-                foreach ($row as $key => $val) {
-                    print "<option value=" . $val . ">" . $val . "</option>";
-                }
-            }
-        ?>
-    </datalist>
-        </input>
-    <input type="submit">
+    <h3> Select Hospital id.</h3>
+    <form method="GET" action="">
+		<input type='number' name="hospital_id"></input>
+		<input type="submit"></input>
     </form>
 
     <?php
-    $sex = 0;
-	if (!empty($_GET))
-		$sex = $_GET["sex"];
-		
-    $age = 0;
-	if (!empty($_GET))
-		$age = $_GET["age"];
-
-    $sql = "select count(*) as num from patientInfo where sex='" . $sex . "' and age='" . $age ."'";
+	$hospital_id = 0;
+	if (!empty($_GET)){
+		$hospital_id = $_GET["hospital_id"];
+		$sql = "select count(*) as num from patientInfo where hospital_id='" . $hospital_id . "'";
+	}
+	else
+		$sql = "select count(*) as num from patientInfo";
     $result = mysqli_query($link, $sql);
     $data = mysqli_fetch_assoc($result);
+	
     ?>
     <p>
         <?php
-            print "<h3> Selected Sex : " . $sex . ", Age : " . $age . "</h3>";
+            print "<h3> Selected Hospital_id : " . $hospital_id . "</h3>";
         ?>
-        <h3>Weather table (Currently <?php echo $data['num']; ?>) rows in database </h3>
+        <h3>Patient table (Currently <?php echo $data['num']; ?>) rows in database </h3>
     </p>
 
     <table cellspacing="0" width="100%">
@@ -92,11 +72,15 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
             <th>released_date</th>
             <th>deceased_date</th>
             <th>state</th>
+            <th>Hospital_id</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $sql = "select * from patientInfo where sex='" . $sex . "' and age='" . $age ."'";
+			if (!empty($_GET))
+				$sql = "select * from patientInfo where hospital_id='" . $hospital_id . "'";
+			else
+				$sql = "select * from patientInfo";
             $result = mysqli_query($link, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 print "<tr>";
