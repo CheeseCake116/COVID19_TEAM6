@@ -85,9 +85,14 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
             while ($row = mysqli_fetch_assoc($result)) {
                 print "<tr>";
                 foreach ($row as $key => $val) {
-					//if ($key == 'Hospital_id')
-					//	print "<td><a link='https://map.kakao.com/link/map/" . . "'>" . $val . "</a></td>";
-                    //else
+					if ($key == 'hospital_id')
+					{
+						$pos = "select Hospital_name, Hospital_latitude, Hospital_longitude from Hospital where hospital_id='" . $val . "'";
+						$pos_res = mysqli_query($link, $pos);
+						$pos_row = mysqli_fetch_assoc($pos_res);
+						print "<td><a href='https://map.kakao.com/link/map/" . $pos_row['Hospital_name'] . "," . $pos_row['Hospital_latitude'] . "," . $pos_row['Hospital_longitude'] . "' target='_blank'>" . $val . "</a></td>";
+					}
+                    else
 						print "<td>" . $val . "</td>";
                 }
                 print "</tr>";
