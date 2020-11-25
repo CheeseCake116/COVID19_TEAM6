@@ -1,0 +1,12 @@
+create table Hospital
+(
+	Hospital_id int NOT NULL PRIMARY KEY,
+	Hospital_name varchar(100),
+	Hospital_province varchar(50),
+	Hospital_city varchar(50),
+	Hospital_latitude float,
+	Hospital_longitude float,
+	Capacity int,
+	Now int
+);
+alter table patientinfo add hospital_id int;
