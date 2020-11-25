@@ -49,7 +49,6 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     ?>
     <p>
         <?php
-		
 			if (!empty($_GET))
 				print "<h3> Selected Hospital_id : " . $hospital_id . "</h3>";
         ?>
@@ -86,7 +85,10 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
             while ($row = mysqli_fetch_assoc($result)) {
                 print "<tr>";
                 foreach ($row as $key => $val) {
-                    print "<td>" . $val . "</td>";
+					//if ($key == 'Hospital_id')
+					//	print "<td><a link='https://map.kakao.com/link/map/" . . "'>" . $val . "</a></td>";
+                    //else
+						print "<td>" . $val . "</td>";
                 }
                 print "</tr>";
             }
