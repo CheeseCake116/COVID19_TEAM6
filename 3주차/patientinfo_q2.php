@@ -56,8 +56,14 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     </form>
 
     <?php
-    $sex = $_GET["sex"];
-    $age = $_GET["age"];
+    $sex = 0;
+	if (!empty($_GET))
+		$sex = $_GET["sex"];
+		
+    $age = 0;
+	if (!empty($_GET))
+		$age = $_GET["age"];
+
     $sql = "select count(*) as num from patientInfo where sex='" . $sex . "' and age='" . $age ."'";
     $result = mysqli_query($link, $sql);
     $data = mysqli_fetch_assoc($result);
