@@ -76,26 +76,27 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     </form>
 
     <?php
-    $province = 0;
+    $province = "all";
 	if (!empty($_GET))
 		$province = $_GET["province"];
 		
-    $month = 0;
+    $month = "all";
 	if (!empty($_GET))
 		$month = $_GET["month"];
-
+		
     $sql = "select count(*) as num from GROUP_INFECTION"; //where province='" . $province . "' and month(wdate)=" . $month;
-    if ($province != "all" or $month != "all") {
-        $sql = $sql . " where ";
-    }
-    if ($province != "all") {
-        $sql = $sql . "province='" . $province . "'";
 
-    }
-    if ($month != "all") {
-        $sql = $sql . " and month(First_Confirmed_Date)=" . $month;
-    }
-    
+	if ($province != "all") {
+		$sql = $sql . " where province='" . $province . "'";
+		if ($month != "all") {
+			$sql = $sql . " and month(First_Confirmed_Date)=" . $month;
+		}
+	}
+    else {
+		if ($month != "all") {
+			$sql = $sql . " where month(First_Confirmed_Date)=" . $month;
+		}
+	}
     
 
     $result = mysqli_query($link, $sql);
@@ -120,16 +121,17 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
         <tbody>
             <?php
             $sql = "select * from GROUP_INFECTION";// where province='" . $province . "' and month(wdate)=" . $month . " order by wdate";
-            if ($province != "all" or $month != "all") {
-                $sql = $sql . " where ";
-            }
-            if ($province != "all") {
-                $sql = $sql . "province='" . $province . "'";
-        
-            }
-            if ($month != "all") {
-                $sql = $sql . " and month(First_Confirmed_Date)=" . $month;
-            }
+			if ($province != "all") {
+				$sql = $sql . " where province='" . $province . "'";
+				if ($month != "all") {
+					$sql = $sql . " and month(First_Confirmed_Date)=" . $month;
+				}
+			}
+			else {
+				if ($month != "all") {
+					$sql = $sql . " where month(First_Confirmed_Date)=" . $month;
+				}
+			}
             
             $result = mysqli_query($link, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
