@@ -90,6 +90,7 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
 						$pos = "select Hospital_name, Hospital_latitude, Hospital_longitude from Hospital where hospital_id='" . $val . "'";
 						$pos_res = mysqli_query($link, $pos);
 						$pos_row = mysqli_fetch_assoc($pos_res);
+						$pos_row['Hospital_name'] = str_replace("'", "&apos;", $pos_row['Hospital_name']); # 병원 이름에 "'"가 들어있으면 치환
 						print "<td><a href='https://map.kakao.com/link/map/" . $pos_row['Hospital_name'] . "," . $pos_row['Hospital_latitude'] . "," . $pos_row['Hospital_longitude'] . "' target='_blank'>" . $val . "</a></td>";
 					}
                     else
