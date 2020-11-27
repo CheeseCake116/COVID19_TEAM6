@@ -25,6 +25,7 @@
     <form action="" method="post">
         <select name ="Province">
             <option value ="none" selected> 선택하세요 </option>
+            <option value ="all">all </option>
             <?php
                 $sql = "select distinct province from region";
                 $res = mysqli_query($link, $sql);
@@ -40,10 +41,16 @@
     </form>
 
     <?php
-        $province = 0;
-        if ( !empty($_POST) )
+        $province = 'all';
+        if ( !empty($_POST) ) // 값이 있으면 
             $province = $_POST['Province'];
-        $sql="select count(*) as num from region where province = '". $province."'";
+        
+        $sql= "select count(*) as num from region"; // 초기값 
+
+        if ( $_POST['Province'] == 'all')
+            $sql= "select count(*) as num from region";
+        else if (!empty($_POST))
+            $sql="select count(*) as num from region where province = '". $province."'";
         $result = mysqli_query($link, $sql);
         $data = mysqli_fetch_assoc($result);
     ?>
@@ -69,10 +76,12 @@
         </tr>
         </thead>
         <tbody>
-            
             <?php
             print "<h3>". "selected province : ". $province ."</h3>" ;
-            $sql = "select * from region where province = '".$province."'";
+            if ($province == 'all')
+                $sql = "select * from region";
+            else
+                $sql = "select * from region where province = '".$province."'";
             $result = mysqli_query($link,$sql);
                     while( $row = mysqli_fetch_assoc($result)  )
                     {
