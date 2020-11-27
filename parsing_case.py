@@ -47,9 +47,7 @@ with open("K_COVID19.csv", 'r') as file:
 
         #make sql data & query
         sql_data = []
-        print(line)
         #"NULL" -> None (String -> null)
-        print(col_list.values())
         for idx in col_list.values() :
             if line[idx] == "NULL" :
                 line[idx] = None
@@ -57,16 +55,14 @@ with open("K_COVID19.csv", 'r') as file:
                 line[idx] = line[idx].strip()
 
             sql_data.append(line[idx])
-        print(sql_data)
         query = """INSERT INTO `caseINFO`(case_id, province, city, infection_group, infection_case, confirmed, latitude, longitude) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
         sql_data = tuple(sql_data)
-        #print(sql_data)
+        
         #for debug
         try:
             cursor.execute(query, sql_data)
             print("[OK] Inserting [%s] to caseINFO"%(line[col_list['case_id']]))
         except (pymysql.Error, pymysql.Warning) as e :
-            # print("[Error]  %s"%(pymysql.IntegrityError))
             if e.args[0] == 1062: continue
             print('[Error] %s | %s'%(line[col_list['case_id']],e))
             break
