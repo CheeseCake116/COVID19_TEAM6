@@ -34,6 +34,7 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     <form method="GET" action="weather_q2.php">
     <input list="provinces" name="province">
     <datalist id="provinces">
+        <option value="all"> All </option>
         <?php
             $sql = "select distinct province from weather";
             $res = mysqli_query($link, $sql);
@@ -48,6 +49,7 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
         </input>
     <input list="months" name="month">
     <datalist id="months">
+        <option value="all"> All </option>
     <?php
             $sql = "select distinct month(wdate) from weather order by month(wdate)";
             $res = mysqli_query($link, $sql);
@@ -64,9 +66,24 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
     </form>
 
     <?php
-    $province = $_GET["province"];
-    $month = $_GET["month"];
-    $sql = "select count(*) as num from weather where province='" . $province . "' and month(wdate)=" . $month;
+    $province = "all";
+    $month = "all";
+    if (!empty($_GET))
+        $province = $_GET["province"];
+    if (!empty($_GET))
+        $month = $_GET["month"];
+    $sql = "select count(*) as num from weather";// where province='" . $province . "' and month(wdate)=" . $month;
+    if ($province != "all") {
+		$sql = $sql . " where province='" . $province . "'";
+		if ($month != "all") {
+			$sql = $sql . " and month(wdate)=" . $month;
+		}
+	}
+    else {
+		if ($month != "all") {
+			$sql = $sql . " where month(wdate)=" . $month;
+		}
+	}
     $result = mysqli_query($link, $sql);
     $data = mysqli_fetch_assoc($result);
     ?>
@@ -90,7 +107,18 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
         </thead>
         <tbody>
             <?php
-            $sql = "select * from weather where province='" . $province . "' and month(wdate)=" . $month . " order by wdate";
+            $sql = "select * from weather";// where province='" . $province . "' and month(wdate)=" . $month . " order by wdate";
+            if ($province != "all") {
+                $sql = $sql . " where province='" . $province . "'";
+                if ($month != "all") {
+                    $sql = $sql . " and month(wdate)=" . $month;
+                }
+            }
+            else {
+                if ($month != "all") {
+                    $sql = $sql . " where month(wdate)=" . $month;
+                }
+            }
             $result = mysqli_query($link, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 print "<tr>";
