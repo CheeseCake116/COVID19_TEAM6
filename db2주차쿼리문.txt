@@ -12,7 +12,8 @@ create table TimeAge (
 	age varchar(10) NOT NULL,
 	confirmed int,
 	deceased int,
-    PRIMARY KEY(date, age)
+    PRIMARY KEY(date, age),
+    CONSTRAINT fk_time_date_age_date FOREIGN KEY (date) REFERENCES TimeInfo (date)
 );
 
 create table TimeGender (
@@ -20,7 +21,8 @@ create table TimeGender (
 	sex varchar(10) NOT NULL,
 	confirmed int,
 	deceased int,
-    PRIMARY KEY(date, sex)
+    PRIMARY KEY(date, sex),
+    CONSTRAINT fk_time_date_gender_date FOREIGN KEY (date) REFERENCES TimeInfo (date)
 );
 
 create table TimeProvince (
@@ -29,5 +31,6 @@ create table TimeProvince (
 	confirmed int,
 	released int,
 	deceased int,
-    PRIMARY KEY(date, province)
+    PRIMARY KEY(date, province),
+    CONSTRAINT fk_time_date_province_date FOREIGN KEY (date) REFERENCES TimeInfo (date)
 );
