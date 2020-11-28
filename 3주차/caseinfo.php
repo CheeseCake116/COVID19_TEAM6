@@ -20,7 +20,7 @@
     <h1 style="text-align:center"> 데이터베이스 팀 프로젝트 3주차</h1>
     <hr style = "border : 5px solid yellowgreen">
     <?php
-        $sql="select count(*) as num from patientinfo";
+        $sql="select count(*) as num from caseinfo";
         $result = mysqli_query($link, $sql);
         $data = mysqli_fetch_assoc($result);
     ?>
