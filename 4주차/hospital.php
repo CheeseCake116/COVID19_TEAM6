@@ -39,10 +39,10 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
 	$hospital_id = 0;
 	if (!empty($_GET)){
 		$hospital_id = $_GET["hospital_id"];
-		$sql = "select count(*) as num from patientInfo where hospital_id='" . $hospital_id . "'";
+		$sql = "select count(*) as num from patientInfo where hospital_id='" . $hospital_id . "' where hospital_id IS NOT NULL";
 	}
 	else
-		$sql = "select count(*) as num from patientInfo";
+		$sql = "select count(*) as num from patientInfo where hospital_id IS NOT NULL";
     $result = mysqli_query($link, $sql);
     $data = mysqli_fetch_assoc($result);
 	

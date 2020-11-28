@@ -10,3 +10,4 @@ create table Hospital
 	Now int
 );
 alter table patientinfo add hospital_id int;
+alter table patientinfo add CONSTRAINT fk_hospital_id_patient_id FOREIGN KEY (hospital_id) REFERENCES hospital (hospital_id);

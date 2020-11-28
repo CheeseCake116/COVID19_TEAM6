@@ -8,23 +8,29 @@ create table TimeInfo (
 );
 
 create table TimeAge (
-	date date PRIMARY KEY,
-	age varchar(10),
+	date date NOT NULL,
+	age varchar(10) NOT NULL,
 	confirmed int,
-	deceased int
+	deceased int,
+    PRIMARY KEY(date, age),
+    CONSTRAINT fk_time_date_age_date FOREIGN KEY (date) REFERENCES TimeInfo (date)
 );
 
 create table TimeGender (
-	date date PRIMARY KEY,
-	sex varchar(10),
+	date date NOT NULL,
+	sex varchar(10) NOT NULL,
 	confirmed int,
-	deceased int
+	deceased int,
+    PRIMARY KEY(date, sex),
+    CONSTRAINT fk_time_date_gender_date FOREIGN KEY (date) REFERENCES TimeInfo (date)
 );
 
 create table TimeProvince (
-	date date PRIMARY KEY,
-	province varchar(10),
+	date date NOT NULL,
+	province varchar(50) NOT NULL,
 	confirmed int,
 	released int,
-	deceased int
+	deceased int,
+    PRIMARY KEY(date, province),
+    CONSTRAINT fk_time_date_province_date FOREIGN KEY (date) REFERENCES TimeInfo (date)
 );

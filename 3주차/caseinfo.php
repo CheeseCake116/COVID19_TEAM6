@@ -1,3 +1,6 @@
+<head>
+    <title> K_COVID19 TEAM6 </title>
+</head>
 <?php
     $link = mysqli_connect("localhost","userid","password", "k_covid19");
     if( $link === false )
@@ -12,20 +15,28 @@
         border: 1px solid #444444;
         border-collapse: collapse;
     }
-    th, td {
+
+    th,
+    td {
         border: 1px solid #444444;
+    }
+
+    h1,
+    h2 {
+        text-align: center;
     }
 </style>
 <body>
-    <h1 style="text-align:center"> 데이터베이스 팀 프로젝트 3주차</h1>
-    <hr style = "border : 5px solid yellowgreen">
+    <h1> 데이타베이스 6조 </h1>
+    <h2>곽진욱, 곽승규, 이주형</h2>
+    <hr style="border : 5px solid yellowgreen">
     <?php
-        $sql="select count(*) as num from patientinfo";
+        $sql="select count(*) as num from caseinfo";
         $result = mysqli_query($link, $sql);
         $data = mysqli_fetch_assoc($result);
     ?>
     <p>
-        <h3>Case Info table (Currently <?php echo $data['num']; ?>) cases in database </h3>
+        <h3>Caseinfo table (Currently <?php echo $data['num']; ?>) cases in database </h3>
     </p>
 
     <table cellspacing="0" width="100%">

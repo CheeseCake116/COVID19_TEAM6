@@ -32,15 +32,25 @@
     <hr style="border : 5px solid yellowgreen">
     <h3> Select number of Confirmed.</h3>
     <?php
-        $sql="select count(*) as num from patientinfo";
-        $result = mysqli_query($link, $sql);
-        $data = mysqli_fetch_assoc($result);
     ?>
 	
 	<?php
 		$selectOption = 0;
+        $sql="select count(*) as num from caseinfo";
 		if (!empty($_POST))
 			$selectOption = $_POST['taskOption'];
+		
+		switch($selectOption) {
+			case 1:
+				$sql="select count(*) as num from caseinfo where confirmed >= 100";
+				break;
+			case 2:
+				$sql="select count(*) as num from caseinfo where confirmed < 100 and confirmed >= 50";
+				break;
+			case 3:
+				$sql="select count(*) as num from caseinfo where confirmed < 50";
+				break;
+		}
 		
 		$opt = array('확진자 수', '100명 이상', '50~100명', '0~50명');
 		print "
@@ -56,10 +66,13 @@
 			</select>
 			<input type='submit' value='load'/>
 			</form>";
+			
+        $result = mysqli_query($link, $sql);
+        $data = mysqli_fetch_assoc($result);
 	?>
 	
     <p>
-        <h3>Case Info table (Currently <?php echo $data['num']; ?>) cases in database </h3>
+        <h3>Caseinfo table (Currently <?php echo $data['num']; ?>) cases in database </h3>
     </p>
 
     <table cellspacing="0" width="100%">

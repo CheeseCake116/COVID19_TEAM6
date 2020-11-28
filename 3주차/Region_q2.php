@@ -1,3 +1,6 @@
+<head>
+    <title> K_COVID19 TEAM6 </title>
+</head>
 <?php
     $link = mysqli_connect("127.0.0.1","tmdrb0912","0206", "k_covid19");
     if( $link === false )
@@ -12,14 +15,21 @@
         border: 1px solid #444444;
         border-collapse: collapse;
     }
-    th, td {
+
+    th,
+    td {
         border: 1px solid #444444;
+    }
+
+    h1,
+    h2 {
+        text-align: center;
     }
 </style>
 <body>
-    <h1 style="text-align:center"> 데이터베이스 팀 프로젝트 6조 </h1>
-    <h2 style="text-align:center"> 곽진욱, 곽승규, 이주형 </h2>
-    <hr style = "border : 5px solid yellowgreen">
+    <h1> 데이타베이스 6조 </h1>
+    <h2>곽진욱, 곽승규, 이주형</h2>
+    <hr style="border : 5px solid yellowgreen">
     
     <h3> Province를 입력하세요 </h3>
     <form action="" method="post">
@@ -47,7 +57,7 @@
         
         $sql= "select count(*) as num from region"; // 초기값 
 
-        if ( $_POST['Province'] == 'all')
+        if ( $province == 'all')
             $sql= "select count(*) as num from region";
         else if (!empty($_POST))
             $sql="select count(*) as num from region where province = '". $province."'";
