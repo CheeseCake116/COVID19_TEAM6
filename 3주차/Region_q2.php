@@ -47,7 +47,7 @@
         
         $sql= "select count(*) as num from region"; // 초기값 
 
-        if ( $_POST['Province'] == 'all')
+        if ( $province == 'all')
             $sql= "select count(*) as num from region";
         else if (!empty($_POST))
             $sql="select count(*) as num from region where province = '". $province."'";
