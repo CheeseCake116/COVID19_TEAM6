@@ -72,7 +72,7 @@
 	?>
 	
     <p>
-        <h3>Case Info table (Currently <?php echo $data['num']; ?>) cases in database </h3>
+        <h3>Caseinfo table (Currently <?php echo $data['num']; ?>) cases in database </h3>
     </p>
 
     <table cellspacing="0" width="100%">
