@@ -102,6 +102,8 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
                 print "<tr>";
                 foreach ($row as $key => $val) {
                     print "<td>" . $val . "</td>";
+					if ($key == 'state')
+						break;
                 }
                 print "</tr>";
             }
