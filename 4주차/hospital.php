@@ -39,7 +39,7 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
 	$hospital_id = 0;
 	if (!empty($_GET)){
 		$hospital_id = $_GET["hospital_id"];
-		$sql = "select count(*) as num from patientInfo where hospital_id='" . $hospital_id . "' where hospital_id IS NOT NULL";
+		$sql = "select count(*) as num from patientInfo where hospital_id='" . $hospital_id . "' and hospital_id IS NOT NULL";
 	}
 	else
 		$sql = "select count(*) as num from patientInfo where hospital_id IS NOT NULL";
@@ -78,9 +78,9 @@ echo "Coneect Successfully. Host info: " . mysqli_get_host_info($link) . "\n";
         <tbody>
             <?php
 			if (!empty($_GET))
-				$sql = "select * from patientInfo where hospital_id='" . $hospital_id . "'";
+				$sql = "select * from patientInfo where hospital_id='" . $hospital_id . "' and hospital_id IS NOT NULL";
 			else
-				$sql = "select * from patientInfo";
+				$sql = "select * from patientInfo where hospital_id IS NOT NULL";
             $result = mysqli_query($link, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 print "<tr>";
